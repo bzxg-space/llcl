@@ -1,0 +1,63 @@
+<!doctype html>
+<!--21-5-23-->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>蓝链处理</title>
+        <meta name="author" content="bzxg"/>
+    </head>
+    <body>
+        <h3 title="点击刷新" onclick="location.reload()">蓝链处理☺</h3>
+        <p>
+            <input type="text" id="origin_url" placeholder="请输入/粘贴蓝链..."/>
+            <input type="button" id="deal_button" value="处理"/>
+        </p>
+        <div id="result_div"></div>
+        <script type="text/javascript">
+            //通过id获取元素
+            function get(id){
+                var ele=document.getElementById(id);    
+                return ele?ele:null;
+            }
+            //给按钮绑定点击事件
+            get('deal_button').onclick=function(){
+                var origin_url_ele=get('origin_url');
+                var result_div_ele=get('result_div');
+                var origin_url=origin_url_ele.value;
+                var patt=/^https:\/\/(\w+)\.lanzous\.com\/([\da-zA-Z]+)$/;
+                if(/^\s*$/.test(origin_url)){
+                    alert('请输入/粘贴蓝链:D');
+                    return;
+                }
+                if(!patt.test(origin_url)){
+                    alert('请输入/粘贴规范的蓝链:D');
+                    return;
+                }
+                //1.获取个性域名与文件(夹)核心字符串
+                var result=origin_url.match(patt);
+                var user=result[1];//个性域名
+                var code=result[2];//文件(夹)核心字符串
+                //2.处理
+                var link_list=new Array();
+                link_list.push('https://www.lanzoui.com/'+code);
+                link_list.push('https://www.lanzoux.com/'+code);
+                link_list.push('https://pan.lanzou.com/'+code);
+                if(user!="www"){
+                    link_list.push('https://'+user+'.lanzoui.com/'+code);
+                    link_list.push('https://'+user+'.lanzoux.com/'+code);
+                }
+                result_div_ele.innerHTML="";
+                //3.显示
+                for(var i=0;i<link_list.length;i++){
+                    var a=document.createElement('a');
+                    a.href=link_list[i];
+                    a.innerText=link_list[i];
+                    a.target="_blank";
+                    var p=document.createElement('p');
+                    p.append(a);
+                    result_div_ele.append(p);
+                }
+            }
+        </script>
+    </body>
+</html>
