@@ -23,8 +23,9 @@
             get('deal_button').onclick=function(){
                 var origin_url_ele=get('origin_url');
                 var result_div_ele=get('result_div');
-                var origin_url=origin_url_ele.value;
-                var patt=/^https:\/\/(\w+)\.lanzous\.com\/([\da-zA-Z]+)$/;
+                var origin_url=origin_url_ele.value;      
+                //蓝奏云个性域名：长度3-16个，包含 字母、数字、-      [\dA-Za-z-]{3,16}
+                var patt=/^https:\/\/([\dA-Za-z-]{3,16})\.lanzous\.com\/([\da-zA-Z]+)$/;
                 if(/^\s*$/.test(origin_url)){
                     alert('请输入/粘贴蓝链:D');
                     return;
